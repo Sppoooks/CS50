@@ -1,19 +1,28 @@
-#Bank file to create bank account of user
-
+import sqlite3
+import useraccount as user
 class Bank:
-    def __init__(self, balance):
-        if not balance:
-            raise ValueError("Balance must be a positive number")
-        self.balance = balance
+    def __init__(self, deposit, withdraw):
+        self.deposit = deposit
+        self.withdraw = withdraw
 
-def balance():
-    bank = get_balance()
-    print(f"Your balance is currently: {bank.balance}$")
+def bank():
+    con = sqlite3.connect("useraccounts.db")
+    cur = con.cursor()
+    _prompt = input("What would you like to do?\n1. Create account\n2. Choose from existing accounts\n")
+    match _prompt:
+        case "1":
+            user.useraccountsql()
+        case "2":
+            sql_statement = "SELECT First, Last FROM accounts"
+            res = cur.execute(sql_statement)
+            print(res.fetchall())
 
-#Get user balance via input function
-def get_balance():
-    balance = input("What is your account balance? ").strip()
-    return Bank(balance)
+    # _prompt = input("What would you like to do: \n1. Deposite \n2. Withdraw \n")
+    # amount = input("Amount: ")
+    # match _prompt:
+    #     case "1":
+    #         sql_statement: "UPDATE accounts "
+    #     case "2":
 
 if __name__ == "__main__":
-    balance()
+    bank()
