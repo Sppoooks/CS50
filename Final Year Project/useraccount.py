@@ -31,7 +31,6 @@ def useraccountsql():
     cur.execute(sql_statement)
     
     data = (str(user_info.first), str(user_info.last), str(user_info.balance))
-    print(data)
     cur.execute("INSERT INTO accounts(First, Last, Balance) VALUES (?, ?, ?)", data)
     con.commit() #commit input values into table
     con.close()
